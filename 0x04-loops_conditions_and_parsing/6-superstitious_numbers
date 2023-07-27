@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# This script displays numbers from 1 to 20 and "bad luck" messages for specific iterations using the case statement.
 
 count=1
 while [ $count -le 20 ]

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# This script displays "Best School" 10 times, but on the 9th iteration, displays "Best School" and then "Hi" on a new line.
 
 count=0
 while [ $count -lt 10 ]

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# fix the issue by add server name
+echo -e "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf
+/etc/init.d/apache2 restart

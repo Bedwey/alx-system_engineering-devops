@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Configuring a server
+sudo apt-get update -y -qq
+sudo apt-get -y install nginx
+sudo echo "Hello World!" > /var/www/html/index.nginx-debian.html
+sudo sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+sudo sed -i '53i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-enabled/default
+sudo service nginx restart

@@ -1,37 +1,29 @@
-# install nginx
-package {'nginx':
-  ensure   => 'installed',
-  provider => 'pip',
+# Setup New Ubuntu server with nginx
+
+# Update System
+exec { 'update system':
+        command => '/usr/bin/apt-get update',
 }
 
-# Create a home page
-file { '/var/www/html/index.nginx-debian.html':
-  ensure  => 'file',
-  content => 'Hello World!',
-  owner   => 'www-data',
-  group   => 'www-data',
-  mode    => '0744',
+# Install nginx
+package { 'nginx':
+	ensure => 'installed',
+	require => Exec['update system']
 }
 
-# Configure Nginx
-file { '/etc/nginx/sites-available/default':
-  ensure  => present,
-  content => "server {\n
-   		        listen 80 default_server;\n
-			listen [::]:80 default_server;\n
-\n
-        		root /var/www/html;\n
-\n
-        		index index.html index.htm index.nginx-debian.html;\n
-\n
-        		server_name _;\n
-\n
-        		location / {\n
-				try_files $uri $uri/ =404;\n
-        		}\n
-\n
- 		       location /redirect_me {\n
-                		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4/;\n
-        	       }\n
-	   }\n",
+# Add home page
+file {'/var/www/html/index.html':
+	content => 'Hello World!'
+}
+
+# Config redirect
+exec {'redirect_me':
+	command => 'sed -i "24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-enabled/default',
+	provider => 'shell'
+}
+
+# Start nginx service
+service {'nginx':
+	ensure => running,
+	require => Package['nginx']
 }

@@ -2,7 +2,7 @@
 # Configuring a server
 sudo apt-get update -y -qq
 sudo apt-get -y install nginx
-sudo echo "Hello World!" > /var/www/html/index.nginx-debian.html
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 sudo sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 sudo sed -i '54i\        location /redirect_me {\'$'\n''            rewrite ^/(.*)$ https://www.facebook.com/bedweyy redirect;\'$'\n''        }' /etc/nginx/sites-enabled/default
 sudo service nginx restart

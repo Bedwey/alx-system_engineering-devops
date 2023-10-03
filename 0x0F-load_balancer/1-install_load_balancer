@@ -25,8 +25,8 @@ frontend http-in
 
 backend servers
    balance roundrobin
-   server web1 35.174.207.21:80 check
-   server web2 54.197.64.186:80 check
+   server 381033-web-01 35.174.207.21:80 check
+   server 381033-web-02 54.197.64.186:80 check
 EOF
 
 # Enable haproxy to be started by init script

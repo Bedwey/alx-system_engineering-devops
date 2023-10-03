@@ -10,27 +10,9 @@ sudo apt-get -y install haproxy=2.8.\*
 # Configure HAProxy
 sudo chown -R "$USER":"$USER" /etc/haproxy/haproxy.cfg
 sudo chmod -R u+rwx /etc/haproxy/
-sudo cat << EOF > /etc/haproxy/haproxy.cfg
-defaults
-        mode    http
-        timeout connect 10s
-        timeout client  15s
-        timeout server  15s
-	timeout http-request 10s
-        
-
-frontend http-in
-    bind *:80
-    default_backend servers
-
-backend servers
-   balance roundrobin
-   server 381033-web-01 35.174.207.21:80 check
-   server 381033-web-02 54.197.64.186:80 check
-EOF
-
+sudo sed -i -e '$a\listen http-in\n\tbind :80\n\tbalance roundrobin\n\tserver 381033-web-01 35.174.207.21:80 check\n\tserver 381033-web-02 54.197.64.186:80 check\n' /etc/haproxy/haproxy.cfg
 # Enable haproxy to be started by init script
-echo "ENABLED=1" | sudo dd status=none of=/etc/default/haproxy
+sudo sed -i -e '$aENABLED=1\n' /etc/default/haproxy
 
 # Start HAProxy service
-sudo service haproxy start
+sudo service haproxy restart

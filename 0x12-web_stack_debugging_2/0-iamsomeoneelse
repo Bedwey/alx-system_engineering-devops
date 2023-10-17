@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-sudo -u www-data whoami
+# runs whami command with the user that passed as argument.
+sudo -u $1 whoami

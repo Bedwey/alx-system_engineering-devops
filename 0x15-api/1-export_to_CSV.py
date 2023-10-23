@@ -15,7 +15,7 @@ if __name__ == '__main__':
             id = int(sys.argv[1])
             emp_req = requests.get('{}/users/{}'.format(REST_API, id)).json()
             task_req = requests.get('{}/todos'.format(REST_API)).json()
-            emp_name = emp_req.get('name')
+            emp_name = emp_req.get('username')
             tasks = list(filter(lambda x: x.get('userId') == id, task_req))
             # Write the data to a CSV file
             with open('{}.csv'.format(id), 'w') as file:

@@ -1,12 +1,13 @@
-# Modify open files limit for holberton user using 'sed' command 
-exec {'change limit to 1024':
-  path    => ['/bin/'],
-  command => 'sed -i "s/holberton hard nofile 5/holberton hard nofile 1024/" \
-  /etc/security/limits.conf'
+# Modify open files limit for holberton user using 'sed' command
+
+# Increase hard file limit for Holberton user.
+exec { 'increase-hard-file-limit-for-holberton-user':
+  command => 'sed -i "/holberton hard/s/5/381033/" /etc/security/limits.conf',
+  path    => '/usr/local/bin/:/bin/'
 }
 
-exec {'change limit to 1024':
-  path    => ['/bin/'],
-  command => 'sed -i "s/holberton soft nofile 4/holberton soft nofile 1024/" \
-  /etc/security/limits.conf'
+# Increase soft file limit for Holberton user.
+exec { 'increase-soft-file-limit-for-holberton-user':
+  command => 'sed -i "/holberton soft/s/4/381033/" /etc/security/limits.conf',
+  path    => '/usr/local/bin/:/bin/'
 }
